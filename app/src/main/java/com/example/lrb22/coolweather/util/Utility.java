@@ -1,6 +1,9 @@
 package com.example.lrb22.coolweather.util;
 
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,6 +12,7 @@ import org.json.JSONObject;
 import db.City;
 import db.County;
 import db.Province;
+import gson.Weather;
 
 /**
  * Created by lrb22 on 2017/11/13.
@@ -77,4 +81,18 @@ public class Utility {
         return false;
     }
 
+
+    public static Weather handleWeatherResponse(String response){
+        try{
+
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            Log.e("wwwwww","cccc"+weatherContent);
+            return new Gson().fromJson(weatherContent, Weather.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
